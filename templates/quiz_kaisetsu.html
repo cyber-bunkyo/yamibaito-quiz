@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>解説ページ｜闇バイト判別クイズ</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      background-color: #f0f8ff;
+      color: #1a2a4f;
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 20px;
+      border: 5px solid #aee5f9;
+      padding: 1.5rem;
+      max-width: 600px;
+      width: 95%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+
+    .judgement {
+      text-align: center;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .correct { color: #30bd93; }
+    .wrong { color: #e1281b; }
+
+    .result {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      margin-bottom: 1.5rem;
+      color: #444;
+      text-align: center;
+    }
+
+    .quiz-preview {
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .quiz-preview iframe {
+      width: 100%;
+      border-radius: 16px;
+      border: none;
+      display: block;
+    }
+
+    /* インスタは縦長、スマホでも画面に合わせる */
+    .quiz-preview iframe.insta {
+      height: min(90vh, 500px);
+    }
+
+    /* X・LINEなどの通常サイズ */
+    .quiz-preview iframe.default {
+      height: clamp(300px, 50vw, 350px);
+    }
+
+    .explanation-box {
+      background-color: #fff6f9;
+      border-left: 8px solid #ff7ca8;
+      color: rgb(20, 31, 55);
+      padding: 1rem 1.5rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .button-area {
+      text-align: center;
+    }
+
+    .btn {
+      background-color: #ff7ca8;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.8rem;
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn:hover { background-color: #f06096; }
+
+    .back-home {
+      text-align: center;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+      color: #ff7ca8;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="judgement">
+      {% if is_correct %}
+        <span class="correct">🎉 正解！</span>
+      {% else %}
+        <span class="wrong">😢 不正解…</span>
+      {% endif %}
+    </div>
+
+    <div class="result">
+      あなたの回答：<span style="color: #ff7ca8; font-weight: bold;">{{ user_answer }}</span><br>
+      これは「<span style="color: #ff7ca8; font-weight: bold;">
+        {{ '闇バイト' if quiz.answer == '×' else '普通のバイト' }}
+      </span>」です。
+    </div>
+
+    <div class="quiz-preview">
+      <iframe 
+        src="/preview/{{ quiz.style }}?quiz_id={{ quiz.id }}" 
+        class="{% if quiz.style == 'insta' %}insta{% else %}default{% endif %}"
+      ></iframe>
+    </div>
+
+    <div class="explanation-box">
+      <strong>解説：</strong><br>
+      {{ quiz.explanation.replace('\n', '<br>') | safe }}
+    </div>
+
+    <div class="button-area">
+      {% if question_number == 10 %}
+        <button class="btn" onclick="location.href='{{ url_for('result') }}'">🏁 結果を見る</button>
+      {% else %}
+        <button class="btn" onclick="location.href='{{ url_for('next_quiz') }}'">▶ 次の問題へ</button>
+      {% endif %}
+      <div class="back-home" onclick="location.href='{{ url_for('index') }}'">トップページに戻る</div>
+    </div>
+  </div>
+</body>
+</html>

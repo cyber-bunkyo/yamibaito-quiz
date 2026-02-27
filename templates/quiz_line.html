@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>闇バイト判別クイズ｜LINE風会話</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 400px;
+      min-width: 300px;
+      background: white;
+      border-radius: 20px;
+      border: 5px solid #aee5f9;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 0.5rem 0;
+    }
+
+    .question-number {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: bold;
+      color: #5472d3;
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+
+    .talk-area {
+      background: #d9edf7;
+      flex-grow: 1;
+      padding: 0.8rem 0.5rem 0.5rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      border-radius: 16px;
+      margin: 0.5rem 0.8rem;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .friend-header {
+      padding-left: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .friend-name-text {
+      font-weight: bold;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      color: #555;
+      user-select: none;
+      margin-bottom: 0.25rem;
+    }
+
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 0.5rem;
+      max-width: 100%;
+    }
+
+    .bubble-row.friend {
+      justify-content: flex-start;
+    }
+
+    .bubble-row.friend .profile-icon {
+      width: clamp(30px, 7vw, 36px);
+      height: clamp(30px, 7vw, 36px);
+      border-radius: 50%;
+      background-color: #ccc;
+      margin-right: 0.4rem;
+      object-fit: cover;
+    }
+
+    .bubble-row.friend .bubble {
+      background: white;
+      border-radius: 18px 18px 18px 4px;
+      padding: 0.5rem 0.8rem;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      white-space: pre-line;
+      max-width: 75%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .bubble-row.self {
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    .self-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-right: 0.3rem;
+      font-size: clamp(0.55rem, 1.5vw, 0.65rem);
+      color: #999;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .bubble-row.self .bubble {
+      background: #d4f8c4;
+      border-radius: 18px 18px 4px 18px;
+      padding: 0.5rem 0.8rem;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      white-space: pre-line;
+      max-width: 75%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .time-stamp {
+      font-size: clamp(0.55rem, 1.5vw, 0.65rem);
+      color: #999;
+      margin-left: 0.3rem;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0.5rem;
+      gap: 0.4rem;
+      margin: 0 0.5rem 0.5rem 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .button-container button {
+      flex: 1 1 45%;
+      min-width: 120px;
+      background-color: #ff7ca8;
+      border: none;
+      border-radius: 999px;
+      color: white;
+      padding: 0.5rem 0.8rem;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+    }
+
+    .button-container button:hover {
+      background-color: #f06096;
+    }
+
+    .back-home {
+      text-align: center;
+      margin: 0.4rem 0;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+      color: #ff7ca8;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="question-number">第{{ question_number }}問</div>
+    <div class="talk-area">
+      <div class="friend-header">
+        <div class="friend-name-text">{{ quiz.username }} 👨‍💼</div>
+      </div>
+
+      <!-- 相手の発言① -->
+      <div class="bubble-row friend">
+        <img class="profile-icon" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="icon" />
+        <div class="bubble">一緒に新しくバイト始めない？💰</div>
+        <div class="time-stamp">14:05</div>
+      </div>
+
+      <!-- 自分の返答（右寄せ＋左に時間＋既読） -->
+      <div class="bubble-row self">
+        <div class="self-meta">
+          <div>既読</div>
+          <div>14:06</div>
+        </div>
+        <div class="bubble">どんなのー❓✨</div>
+      </div>
+
+      <!-- 相手の発言②（コンテンツ） -->
+      <div class="bubble-row friend">
+        <img class="profile-icon" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="icon" />
+        <div class="bubble">{{ quiz.content | safe }}</div>
+        <div class="time-stamp">14:07</div>
+      </div>
+    </div>
+
+    <!-- 回答ボタン -->
+    <form method="POST" action="/explanation">
+      <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+      <input type="hidden" name="quiz_type" value="line">
+      <div class="button-container">
+        <button type="submit" name="answer" value="〇"><strong>〇 普通のバイト</strong></button>
+        <button type="submit" name="answer" value="×"><strong>✕ 闇バイト</strong></button>
+      </div>
+    </form>
+
+    <div class="back-home" onclick="location.href='/'">トップページに戻る</div>
+  </div>
+</body>
+</html>

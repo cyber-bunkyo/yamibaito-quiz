@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>闇バイト判別クイズ｜LINEプレビュー</title>
+  <style>
+    body {
+      background-color: transparent;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .talk-area {
+      background: #d9edf7;
+      width: 100%;
+      max-width: 380px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      border-radius: 16px;
+      box-sizing: border-box;
+    }
+
+    .friend-header {
+      padding-left: 12px;
+      margin-bottom: 12px;
+    }
+
+    .friend-name-text {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #555;
+      user-select: none;
+      margin-bottom: 4px;
+    }
+
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 12px;
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+
+    .bubble-row.friend {
+      justify-content: flex-start;
+    }
+
+    .bubble-row.friend .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #ccc;
+      margin-right: 8px;
+      object-fit: cover;
+    }
+
+    .bubble-row.friend .bubble {
+      background: white;
+      border-radius: 18px 18px 18px 4px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      white-space: pre-line;
+      max-width: 75%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      word-wrap: break-word;
+    }
+
+    .bubble-row.self {
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    .self-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-right: 6px;
+      font-size: 0.65rem;
+      color: #999;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .bubble-row.self .bubble {
+      background: #d4f8c4;
+      border-radius: 18px 18px 4px 18px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      white-space: pre-line;
+      max-width: 75%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      word-wrap: break-word;
+    }
+
+    .time-stamp {
+      font-size: 0.65rem;
+      color: #999;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="talk-area">
+    <div class="friend-header">
+      <div class="friend-name-text">{{ quiz.username }} 👨‍💼</div>
+    </div>
+
+    <!-- 相手の発言① -->
+    <div class="bubble-row friend">
+      <img class="profile-icon" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="icon" />
+      <div class="bubble">一緒に新しくバイト始めない？💰</div>
+      <div class="time-stamp">14:05</div>
+    </div>
+
+    <!-- 自分の返答 -->
+    <div class="bubble-row self">
+      <div class="self-meta">
+        <div>既読</div>
+        <div>14:06</div>
+      </div>
+      <div class="bubble">どんなのー❓✨</div>
+    </div>
+
+    <!-- 相手の発言② -->
+    <div class="bubble-row friend">
+      <img class="profile-icon" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="icon" />
+      <div class="bubble">{{ quiz.content | safe }}</div>
+      <div class="time-stamp">14:07</div>
+    </div>
+  </div>
+</body>
+</html>

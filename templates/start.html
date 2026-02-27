@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闇バイト判別クイズ｜スタート</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      background-color: #f0f8ff;
+      color: #1a2a4f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border: 5px solid #aee5f9;
+      max-width: 500px;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #1a2a4f;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #1a2a4f;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #ff7ca8;
+    }
+
+    .start-button {
+      background-color: #ff7ca8;
+      color: white;
+      border: none;
+      padding: 1rem 2.2rem;
+      font-size: 1.2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .start-button:hover {
+      background-color: #f06096;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">闇バイト判別クイズ</div>
+    <h1>ようこそ！</h1>
+    <div class="subtitle">
+      <span class="highlight">全10問</span>のバイト勧誘を見て、<br>
+      闇バイトを見抜けるか挑戦しよう💡
+    </div>
+    <form action="/start_quiz" method="post">
+      <button class="start-button">スタート ▶</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>闇バイト判別クイズ｜プレビュー</title>
+  <style>
+    body {
+      background-color: transparent;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      color: #1a2a4f;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 1rem 1.2rem;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+      border: 5px solid #aee5f9;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .tweet-header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      border: 2px solid #ff7ca8;
+      object-fit: cover;
+    }
+    .tweet-header .user-info {
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .tweet-header .user-info .name {
+      font-weight: bold;
+      color: #1a2a4f;
+    }
+    .tweet-header .user-info .handle {
+      color: #5472d3;
+    }
+    .tweet-content {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 1.8rem;
+      white-space: pre-line;
+      word-wrap: break-word;
+    }
+    .hashtags {
+      color: #657786;
+      margin-bottom: 1rem;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tweet-header">
+      <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="user" />
+      <div class="user-info">
+        <div class="name">{{ quiz.username }}</div>
+        <div class="handle">{{ quiz.handle }} ・ {{ quiz.time_ago }}</div>
+      </div>
+    </div>
+    <div class="tweet-content">
+      {{ quiz.content | safe }}
+    </div>
+    <div class="hashtags">
+      {{ quiz.hashtags }}
+    </div>
+  </div>
+</body>
+</html>

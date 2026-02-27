@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闇バイト判別クイズ｜スタート</title>
+  <style>
+    /* 全体設定 */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      font-size: clamp(14px, 2vw, 18px);
+      color: #1a2a4f;
+      background-color: #f0f8ff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* フェードインアニメーション */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      min-width: 300px;
+      padding: 2rem;
+      text-align: center;
+      background: white;
+      border-radius: 20px;
+      border: 5px solid #aee5f9;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .logo {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      font-weight: bold;
+      color: #1a2a4f;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 1.8rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #ff7ca8;
+    }
+
+    /* 難易度ボタン */
+    .difficulty-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .difficulty-button {
+      width: 30%;
+      max-width: 140px;
+      min-width: 100px;
+      height: 3rem;
+      border-radius: 999px;
+      border: 2px solid #ff7ca8;
+      background-color: white;
+      color: #ff7ca8;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .difficulty-button.selected {
+      background-color: #ff7ca8;
+      color: white;
+    }
+
+    /* スタートボタン */
+    .start-button {
+      padding: 1rem 2rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      background-color: #ff7ca8;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .start-button:hover {
+      font-weight: bold;
+      background-color: #f06096;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">闇バイト判別クイズ</div>
+    <h1>ようこそ！</h1>
+    <div class="subtitle">
+      <span class="highlight">全10問</span>のバイト勧誘を見て、<br>
+      闇バイトを見抜けるか挑戦しよう💡
+    </div>
+
+    <div class="difficulty-buttons">
+      <button type="button" class="difficulty-button" data-value="easy">やさしい</button>
+      <button type="button" class="difficulty-button" data-value="hard">むずかしい</button>
+    </div>
+
+    <form action="/start_quiz" method="post" id="startForm">
+      <input type="hidden" name="difficulty" id="difficultyInput" value="easy">
+      <button type="submit" class="start-button">スタート ▶</button>
+    </form>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.difficulty-button');
+    const hiddenInput = document.getElementById('difficultyInput');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        hiddenInput.value = btn.dataset.value;
+      });
+    });
+  </script>
+</body>
+</html>

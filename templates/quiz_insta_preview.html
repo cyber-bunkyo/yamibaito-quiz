@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>闇バイト判別クイズ｜Instagramストーリー</title>
+  <style>
+    body {
+      background-color: transparent;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .story-inner {
+      background: linear-gradient(135deg, #ffa500, #ff6600);
+      color: white;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem 1rem 0 1rem;
+      box-sizing: border-box;
+      height: 450px; /* ストーリー縦長 */
+      width: 250px;  /* 横幅固定 */
+      overflow: hidden; /* フッターが外に出ないように */
+    }
+
+    .story-header {
+      display: flex;
+      align-items: center;
+      font-size: clamp(0.8rem, 2vw, 0.95rem);
+      margin-bottom: 1rem;
+    }
+
+    .profile-icon img {
+      width: clamp(30px, 8vw, 36px);
+      height: clamp(30px, 8vw, 36px);
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .username-time {
+      font-weight: bold;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+    }
+
+    .story-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-grow: 1;
+      padding: 0 0.25rem;
+    }
+
+    .story-text {
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      font-weight: 600;
+      line-height: 1.6;
+      white-space: pre-line;
+      margin-bottom: 0.5rem;
+      user-select: text;
+    }
+
+    .hashtags {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: white;
+      text-decoration: underline;
+      font-weight: 600;
+      user-select: none;
+      margin-bottom: 0.5rem;
+      word-wrap: break-word;
+    }
+
+    .footer-bar {
+      background: black;
+      padding: 0.6rem;
+      font-size: clamp(0.8rem, 2vw, 0.95rem);
+      color: #aaa;
+      text-align: center;
+      user-select: none;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      width: calc(100% + 32px);
+      margin: 0 -16px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="story-inner">
+    <div class="story-header">
+      <div class="profile-icon">
+        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="icon" />
+      </div>
+      <div class="username-time">{{ quiz.username }}　<span style="font-weight: normal;">{{ quiz.time_ago }}</span></div>
+    </div>
+    <div class="story-main">
+      <div class="story-text">{{ quiz.content | safe }}</div>
+      <div class="hashtags">{{ quiz.hashtags }}</div>
+    </div>
+    <div class="footer-bar">メッセージを送信...</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>闇バイト判別クイズ｜X風</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      color: #1a2a4f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 450px;
+      min-width: 300px;
+      padding: 1.8rem 2rem;
+      background: white;
+      border-radius: 20px;
+      border: 5px solid #aee5f9;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .question-number {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: bold;
+      color: #5472d3;
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .tweet-header img {
+      width: clamp(30px, 8vw, 40px);
+      height: clamp(30px, 8vw, 40px);
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      border: 2px solid #ff7ca8;
+    }
+
+    .user-info {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      line-height: 1.2;
+    }
+
+    .user-info .name {
+      font-weight: bold;
+      color: #1a2a4f;
+    }
+
+    .user-info .handle {
+      color: #5472d3;
+    }
+
+    .tweet-content {
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      white-space: pre-line;
+    }
+
+    .hashtags {
+      color: #657786;
+      margin-bottom: 1rem;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      word-wrap: break-word;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .buttons button {
+      flex: 1 1 45%;
+      min-width: 120px;
+      background-color: #ff7ca8;
+      border: none;
+      border-radius: 999px;
+      color: white;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #f06096;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      font-weight: 600;
+      color: #ff7ca8;
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: none;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="question-number">第{{ question_number }}問</div>
+    <div class="tweet-header">
+      <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png" alt="user" />
+      <div class="user-info">
+        <div class="name">{{ quiz.username }}</div>
+        <div class="handle">{{ quiz.handle }} ・ {{ quiz.time_ago }}</div>
+      </div>
+    </div>
+    <div class="tweet-content">
+      {{ quiz.content | safe }}
+    </div>
+    <div class="hashtags">
+      {{ quiz.hashtags }}
+    </div>
+    <form method="post" action="/explanation">
+      <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+      <div class="buttons">
+        <button type="submit" name="answer" value="〇"><strong>〇 普通のバイト</strong></button>
+        <button type="submit" name="answer" value="×"><strong>✕ 闇バイト</strong></button>
+      </div>
+    </form>
+    <div class="back-home" onclick="location.href='/'">トップページに戻る</div>
+  </div>
+</body>
+</html>

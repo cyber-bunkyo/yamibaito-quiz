@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>結果ページ｜闇バイト判別クイズ</title>
+  <style>
+    body {
+      background-color: #f0f8ff !important;
+      margin: 0;
+      padding: 2rem 1rem;
+      font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+      color: #1a2a4f;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* ←中央寄せ */
+    }
+
+    .container {
+      background-color: white;
+      padding: 2rem 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border: 5px solid #aee5f9;
+      width: 100%;
+      max-width: 600px;   /* ←ここで最大幅指定 */
+      margin: 1rem auto;  /* ←左右自動マージンで中央寄せ */
+      box-sizing: border-box;
+    }
+
+
+    h1, h2 { text-align: center; margin-top: 0; }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff7ca8;
+      margin: 1rem 0;
+      text-align: center;
+    }
+
+    .message { font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center; }
+    .type { font-size: 1rem; font-weight: bold; margin-bottom: 1rem; color: #5472d3; text-align: center; }
+
+    .return-button {
+      background-color: #ff7ca8;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: block;
+      margin: 0 auto;
+    }
+    .return-button:hover { background-color: #f06096; }
+
+    /* 振り返りセクション */
+    .review-item { margin-bottom: 1rem; border: 1px solid #aee5f9; border-radius: 12px; overflow: hidden; }
+    .toggle-btn {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      text-align: left;
+      background: #e0f7ff;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .preview {
+      display: none;
+      flex-direction: column;
+      padding: 1rem;
+      background: #f9f9f9;
+      border-top: 1px solid #aee5f9;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+
+    /* iframe調整 */
+    .preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+
+    p { margin: 0.5rem 0 0 0; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>結果発表！</h1>
+    <div class="score">{{ score }} / 10 問正解 🎉</div>
+    <div class="message">{{ message }}</div>
+    <div class="type">あなたは <strong>{{ user_type }}</strong> タイプ！</div>
+    <button class="return-button" onclick="location.href='/'"><strong>スタートに戻る</strong></button>
+  </div>
+
+  <div class="container">
+    <h2>問題の振り返り</h2>
+    {% for quiz in result_details %}
+      <div class="review-item">
+        <button class="toggle-btn">
+          問題 {{ loop.index }} :
+          {% if quiz.is_correct %}
+            <span class="correct">正解 ✅</span>
+          {% else %}
+            <span class="incorrect">不正解 ❌</span>
+          {% endif %}
+        </button>
+        <div class="preview">
+          {% if quiz.style == 'line' %}
+            {% include 'quiz_line_preview.html' %}
+          {% elif quiz.style == 'insta' %}
+            {% include 'quiz_insta_preview.html' %}
+          {% else %}
+            {% include 'quiz_x_preview.html' %}
+          {% endif %}
+          <p>あなたの答え：{{ quiz.user_answer }} / 正解：{{ quiz.answer }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preview = btn.nextElementSibling;
+        preview.style.display = preview.style.display === 'flex' ? 'none' : 'flex';
+      });
+    });
+  </script>
+
+</body>
+</html>

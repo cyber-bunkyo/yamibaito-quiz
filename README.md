@@ -1,1 +1,1 @@
-# yami-quiz
+# yamibaito-quiz
